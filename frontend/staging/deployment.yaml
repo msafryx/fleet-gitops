@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fleet-frontend
-  namespace: fleet
+  namespace: fleet-staging
 spec:
   replicas: 1
   selector:
