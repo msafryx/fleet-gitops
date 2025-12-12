@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: muhammedsafry/fleet-management-front-end
-  tag: "14"
+  tag: "18"
   pullPolicy: Always
 
 service:
