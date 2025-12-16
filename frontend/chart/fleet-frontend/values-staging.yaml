@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: muhammedsafry/fleet-management-front-end
+  tag: "18"
+  pullPolicy: Always
+
+service:
+  type: NodePort
+  port: 3000
+  targetPort: 3000
+  nodePort: 30080
+
+nameOverride: fleet-frontend
+namespace: fleet-staging
