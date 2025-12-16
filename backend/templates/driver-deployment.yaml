@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: driver-service
+  name: fleet-driver
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.driver.replicaCount }}
   selector:
     matchLabels:
-      app: driver-service
+      app: fleet-driver
   template:
     metadata:
       labels:
-        app: driver-service
+        app: fleet-driver
     spec:
       containers:
-        - name: driver
-          image: "{{ .Values.services.driver.image }}:{{ .Values.services.driver.tag }}"
+        - name: fleet-driver
+          image: "{{ .Values.driver.image.repository }}:{{ .Values.driver.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.driver.service.port }}

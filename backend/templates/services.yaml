@@ -1,12 +1,43 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .name }}
-  namespace: {{ $.Values.namespace }}
+  name: fleet-driver-svc
+  namespace: {{ .Values.namespace }}
 spec:
-  type: ClusterIP
   selector:
-    app: {{ .name }}
+    app: fleet-driver
   ports:
-    - port: {{ .port }}
-      targetPort: {{ .port }}
+    - name: http
+      port: {{ .Values.driver.service.port }}
+      targetPort: {{ .Values.driver.service.port }}
+  type: {{ .Values.driver.service.type }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-vehicle-svc
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: fleet-vehicle
+  ports:
+    - name: http
+      port: {{ .Values.vehicle.service.port }}
+      targetPort: {{ .Values.vehicle.service.port }}
+  type: {{ .Values.vehicle.service.type }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-maintenance-svc
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: fleet-maintenance
+  ports:
+    - name: http
+      port: {{ .Values.maintenance.service.port }}
+      targetPort: {{ .Values.maintenance.service.port }}
+  type: {{ .Values.maintenance.service.type }}

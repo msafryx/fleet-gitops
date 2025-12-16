@@ -1,20 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vehicle-service
+  name: fleet-vehicle
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.vehicle.replicaCount }}
   selector:
     matchLabels:
-      app: vehicle-service
+      app: fleet-vehicle
   template:
     metadata:
       labels:
-        app: vehicle-service
+        app: fleet-vehicle
     spec:
       containers:
-        - name: vehicle
-          image: "{{ .Values.services.vehicle.image }}:{{ .Values.services.vehicle.tag }}"
+        - name: fleet-vehicle
+          image: "{{ .Values.vehicle.image.repository }}:{{ .Values.vehicle.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.vehicle.service.port }}
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{ .Values.vehicle.env.ASPNETCORE_ENVIRONMENT }}"
+            - name: ASPNETCORE_URLS
+              value: "{{ .Values.vehicle.env.ASPNETCORE_URLS }}"
+            - name: CORS_ORIGINS
+              value: "{{ .Values.vehicle.env.CORS_ORIGINS }}"
+            - name: ConnectionStrings__DefaultConnection
+              value: "{{ .Values.vehicle.env.ConnectionStrings__DefaultConnection }}"

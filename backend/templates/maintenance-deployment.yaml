@@ -1,21 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: maintenance-service
+  name: fleet-maintenance
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.maintenance.replicaCount }}
   selector:
     matchLabels:
-      app: maintenance-service
+      app: fleet-maintenance
   template:
     metadata:
       labels:
-        app: maintenance-service
+        app: fleet-maintenance
     spec:
       containers:
-        - name: maintenance
-          image: "{{ .Values.services.maintenance.image }}:{{ .Values.services.maintenance.tag }}"
+        - name: fleet-maintenance
+          image: "{{ .Values.maintenance.image.repository }}:{{ .Values.maintenance.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           ports:
-            - containerPort: 5001
-
+            - containerPort: {{ .Values.maintenance.service.port }}
+          env:
+            - name: FLASK_ENV
+              value: "{{ .Values.maintenance.env.FLASK_ENV }}"
+            - name: FLASK_APP
+              value: "{{ .Values.maintenance.env.FLASK_APP }}"
+            - name: PYTHONUNBUFFERED
+              value: "{{ .Values.maintenance.env.PYTHONUNBUFFERED }}"
