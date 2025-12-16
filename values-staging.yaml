@@ -1,0 +1,17 @@
+namespace: fleet-staging
+
+services:
+  driver:
+    image: muhammedsafry/driver-service
+    tag: latest
+    port: 8080
+
+  maintenance:
+    image: muhammedsafry/maintenance-service
+    tag: latest
+    port: 5001
+
+  vehicle:
+    image: muhammedsafry/vehicle-service
+    tag: latest
+    port: 8080
