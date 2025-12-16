@@ -1,0 +1,14 @@
+replicaCount: 2
+
+image:
+  repository: muhammedsafry/fleet-management-front-end
+  tag: "18"          # NEVER use "latest" in prod
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 3000
+  targetPort: 3000
+  nodePort: 30081    # different from staging
+
+nameOverride: fleet-frontend
