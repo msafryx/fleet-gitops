@@ -1,17 +1,34 @@
 namespace: fleet-staging
 
-services:
-  driver:
-    image: muhammedsafry/driver-service
-    tag: latest
+driver:
+  replicaCount: 1
+  image:
+    repository: muhammedsafry/fleet-driver-service
+    tag: "1"
+    pullPolicy: Always
+  service:
+    type: ClusterIP
     port: 8080
+    targetPort: 8080
 
-  maintenance:
-    image: muhammedsafry/maintenance-service
-    tag: latest
+maintenance:
+  replicaCount: 1
+  image:
+    repository: muhammedsafry/fleet-maintenance-service
+    tag: "1"
+    pullPolicy: Always
+  service:
+    type: ClusterIP
     port: 5001
+    targetPort: 5001
 
-  vehicle:
-    image: muhammedsafry/vehicle-service
-    tag: latest
-    port: 8080
+vehicle:
+  replicaCount: 1
+  image:
+    repository: muhammedsafry/fleet-vehicle-service
+    tag: "1"
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 7001
+    targetPort: 8080
