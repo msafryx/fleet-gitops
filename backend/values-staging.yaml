@@ -3,18 +3,18 @@ namespace: fleet-staging
 postgres:
   host: postgres
   port: 5432
-  # driver DB
+
+  # Use ONE consistent DB + user + pass for all services
+  # (Matches the Postgres deployment I gave: fleet / fleetuser / fleetpass)
   driverDb: fleet
-  driverUser: postgres
-  driverPass: postgres
+  driverUser: fleetuser
+  driverPass: fleetpass
 
-  # maintenance DB
   maintenanceDb: fleet
-  maintenanceUser: postgres
-  maintenancePass: postgres
+  maintenanceUser: fleetuser
+  maintenancePass: fleetpass
 
-  # vehicle DB
-  vehicleDb: fleetdb
+  vehicleDb: fleet
   vehicleUser: fleetuser
   vehiclePass: fleetpass
 
@@ -30,6 +30,10 @@ driver:
     targetPort: 8080
   env:
     SPRING_PROFILES_ACTIVE: "staging"
+    # Spring Boot datasource (Flyway/JPA)
+    SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/fleet"
+    SPRING_DATASOURCE_USERNAME: "fleetuser"
+    SPRING_DATASOURCE_PASSWORD: "fleetpass"
 
 maintenance:
   replicaCount: 1
@@ -42,11 +46,12 @@ maintenance:
     port: 5001
     targetPort: 5001
   env:
-    # IMPORTANT: set this to a config key that exists in your Flask app.
-    # If you don't have "staging" in config dict, use "development" or "production".
+    # keep as development unless your config has "staging"
     FLASK_ENV: "development"
     FLASK_APP: "run.py"
     PYTHONUNBUFFERED: "1"
+    # SQLAlchemy / Alembic DB URL
+    DATABASE_URL: "postgresql+psycopg2://fleetuser:fleetpass@postgres:5432/fleet"
 
 vehicle:
   replicaCount: 1
@@ -62,3 +67,5 @@ vehicle:
     ASPNETCORE_ENVIRONMENT: "Staging"
     ASPNETCORE_URLS: "http://+:8080"
     CORS_ORIGINS: "*"
+    # .NET EF Core connection string
+    ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=fleet;Username=fleetuser;Password=fleetpass"
