@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-maintenance-svc
+  namespace: {{ .Values.namespace | quote }}
+spec:
+  selector:
+    app: fleet-maintenance
+  ports:
+    - name: http
+      port: {{ .Values.maintenance.service.port }}
+      targetPort: {{ .Values.maintenance.service.targetPort }}
+  type: {{ .Values.maintenance.service.type }}
