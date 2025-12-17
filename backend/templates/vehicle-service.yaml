@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-vehicle-svc
+  namespace: {{ .Values.namespace | quote }}
+spec:
+  selector:
+    app: fleet-vehicle
+  ports:
+    - name: http
+      port: {{ .Values.vehicle.service.port }}
+      targetPort: {{ .Values.vehicle.service.targetPort }}
+  type: {{ .Values.vehicle.service.type }}
