@@ -29,7 +29,7 @@ vehicle:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-vehicle-service
-    tag: "1"
+    tag: "3-550ed50"
     pullPolicy: Always
   service:
     type: ClusterIP
