@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fleet-driver
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace | quote }}
 spec:
   replicas: {{ .Values.driver.replicaCount }}
   selector:
@@ -16,6 +16,9 @@ spec:
       containers:
         - name: fleet-driver
           image: "{{ .Values.driver.image.repository }}:{{ .Values.driver.image.tag }}"
-          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.driver.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.driver.service.port }}
+            - containerPort: {{ .Values.driver.service.targetPort }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ default "staging" .Values.driver.env.SPRING_PROFILES_ACTIVE | quote }}
