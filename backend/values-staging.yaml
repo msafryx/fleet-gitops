@@ -1,37 +1,40 @@
 namespace: fleet-staging
 
-global:
-  imagePullPolicy: Always
-  
 driver:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-driver-service
-    tag: "3-550ed50"
+    tag: "1"
     pullPolicy: Always
   service:
     type: ClusterIP
     port: 8080
     targetPort: 8080
+  env:
+    SPRING_PROFILES_ACTIVE: "staging"
 
 maintenance:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-maintenance-service
-    tag: "3-550ed50"
+    tag: "1"
     pullPolicy: Always
   service:
     type: ClusterIP
     port: 5001
     targetPort: 5001
+  env:
+    FLASK_ENV: "staging"
 
 vehicle:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-vehicle-service
-    tag: "3-550ed50"
+    tag: "1"
     pullPolicy: Always
   service:
     type: ClusterIP
     port: 7001
     targetPort: 8080
+  env:
+    ASPNETCORE_ENVIRONMENT: "Staging"
