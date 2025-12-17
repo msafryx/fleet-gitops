@@ -4,7 +4,7 @@ driver:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-driver-service
-    tag: "1"
+    tag: "2-f51bb4e"
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -17,7 +17,7 @@ maintenance:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-maintenance-service
-    tag: "1"
+    tag: "2-f51bb4e"
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -32,7 +32,7 @@ vehicle:
   replicaCount: 1
   image:
     repository: muhammedsafry/fleet-vehicle-service
-    tag: "1"
+    tag: "2-f51bb4e"
     pullPolicy: Always
   service:
     type: ClusterIP
