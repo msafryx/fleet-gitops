@@ -21,8 +21,12 @@ spec:
             - containerPort: {{ .Values.maintenance.service.targetPort }}
           env:
             - name: FLASK_ENV
-              value: {{ default "staging" .Values.maintenance.env.FLASK_ENV | quote }}
+              value: {{ default "development" .Values.maintenance.env.FLASK_ENV | quote }}
             - name: FLASK_APP
               value: {{ default "run.py" .Values.maintenance.env.FLASK_APP | quote }}
             - name: PYTHONUNBUFFERED
               value: {{ default "1" .Values.maintenance.env.PYTHONUNBUFFERED | quote }}
+
+            # Postgres (Flask SQLAlchemy)
+            - name: DATABASE_URL
+              value: {{ printf "postgresql+psycopg2://%s:%s@%s:%v/%s" .Values.postgres.maintenanceUser .Values.postgres.maintenancePass .Values.postgres.host .Values.postgres.port .Values.postgres.maintenanceDb | quote }}
