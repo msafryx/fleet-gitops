@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: muhammedsafry/fleet-frontend
-  tag: "latest"
+  tag: "5-b0a896d"
   pullPolicy: IfNotPresent
 
 service:
