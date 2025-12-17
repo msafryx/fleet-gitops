@@ -1,5 +1,8 @@
 namespace: fleet-staging
 
+global:
+  imagePullPolicy: Always
+  
 driver:
   replicaCount: 1
   image:
