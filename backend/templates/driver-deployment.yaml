@@ -22,3 +22,11 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: {{ default "staging" .Values.driver.env.SPRING_PROFILES_ACTIVE | quote }}
+
+            # ✅ Postgres (Spring Boot)
+            - name: SPRING_DATASOURCE_URL
+              value: {{ printf "jdbc:postgresql://%s:%v/%s" .Values.postgres.host .Values.postgres.port .Values.postgres.driverDb | quote }}
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ .Values.postgres.driverUser | quote }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ .Values.postgres.driverPass | quote }}
