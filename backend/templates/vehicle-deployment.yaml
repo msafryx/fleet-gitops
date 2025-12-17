@@ -27,4 +27,4 @@ spec:
             - name: CORS_ORIGINS
               value: {{ default "*" .Values.vehicle.env.CORS_ORIGINS | quote }}
             - name: ConnectionStrings__DefaultConnection
-              value: {{ default "" .Values.vehicle.env.ConnectionStrings__DefaultConnection | quote }}
+              value: {{ printf "Host=%s;Port=%v;Database=%s;Username=%s;Password=%s" .Values.postgres.host .Values.postgres.port .Values.postgres.vehicleDb .Values.postgres.vehicleUser .Values.postgres.vehiclePass | quote }}
