@@ -1,15 +1,12 @@
-replicaCount: 1
+namespace: fleet-staging
 
 image:
-  repository: muhammedsafry/fleet-management-front-end
-  tag: "18"
-  pullPolicy: Always
+  repository: muhammedsafry/fleet-frontend
+  tag: "1"
+  pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
-  port: 3000
-  targetPort: 3000
-  nodePort: 30080
+  type: ClusterIP
+  port: 80
 
-nameOverride: fleet-frontend
-namespace: fleet-staging
+replicaCount: 1
