@@ -12,6 +12,9 @@ driver:
     targetPort: 8080
   env:
     SPRING_PROFILES_ACTIVE: "staging"
+    SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/fleet"
+    SPRING_DATASOURCE_USERNAME: "postgres"
+    SPRING_DATASOURCE_PASSWORD: "postgres"
 
 maintenance:
   replicaCount: 1
