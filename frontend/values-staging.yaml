@@ -10,17 +10,3 @@ service:
   port: 80
 
 replicaCount: 1
-
-env:
-  KEYCLOAK_ID: fleet-management-frontend
-  KEYCLOAK_ISSUER: http://localhost:8080/realms/fleet-management-app
-  NEXTAUTH_URL: http://localhost:3000
-  NEXT_PUBLIC_VEHICLE_SERVICE_URL: http://localhost:7001
-  NEXT_PUBLIC_DRIVER_SERVICE_URL: http://localhost:6001
-  NEXT_PUBLIC_MAINTENANCE_SERVICE_URL: http://localhost:5001
-
-secrets:
-  name: frontend-auth-secrets
-  keys:
-    KEYCLOAK_SECRET: KEYCLOAK_SECRET
-    NEXTAUTH_SECRET: NEXTAUTH_SECRET
