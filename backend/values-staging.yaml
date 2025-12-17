@@ -24,7 +24,7 @@ maintenance:
     port: 5001
     targetPort: 5001
   env:
-    FLASK_ENV: "staging"
+    FLASK_ENV: "development"
     FLASK_APP: "run.py"
     PYTHONUNBUFFERED: "1"
 
