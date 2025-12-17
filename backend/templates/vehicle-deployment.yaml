@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fleet-vehicle
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace | quote }}
 spec:
   replicas: {{ .Values.vehicle.replicaCount }}
   selector:
@@ -16,15 +16,15 @@ spec:
       containers:
         - name: fleet-vehicle
           image: "{{ .Values.vehicle.image.repository }}:{{ .Values.vehicle.image.tag }}"
-          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.vehicle.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.vehicle.service.port }}
+            - containerPort: {{ .Values.vehicle.service.targetPort }}
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: "{{ .Values.vehicle.env.ASPNETCORE_ENVIRONMENT }}"
+              value: {{ default "Staging" .Values.vehicle.env.ASPNETCORE_ENVIRONMENT | quote }}
             - name: ASPNETCORE_URLS
-              value: "{{ .Values.vehicle.env.ASPNETCORE_URLS }}"
+              value: {{ default "http://+:8080" .Values.vehicle.env.ASPNETCORE_URLS | quote }}
             - name: CORS_ORIGINS
-              value: "{{ .Values.vehicle.env.CORS_ORIGINS }}"
+              value: {{ default "*" .Values.vehicle.env.CORS_ORIGINS | quote }}
             - name: ConnectionStrings__DefaultConnection
-              value: "{{ .Values.vehicle.env.ConnectionStrings__DefaultConnection }}"
+              value: {{ default "" .Values.vehicle.env.ConnectionStrings__DefaultConnection | quote }}
