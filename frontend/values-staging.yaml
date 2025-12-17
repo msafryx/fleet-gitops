@@ -1,12 +1,17 @@
-namespace: fleet-staging
+replicaCount: 1
 
 image:
   repository: muhammedsafry/fleet-frontend
-  tag: "6-b0a896d"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3000
 
-replicaCount: 1
+env:
+  NEXT_PUBLIC_VEHICLE_SERVICE_URL: "http://vehicle-service.fleet-staging.svc.cluster.local:7001"
+  NEXT_PUBLIC_DRIVER_SERVICE_URL: "http://driver-service.fleet-staging.svc.cluster.local:6001"
+  NEXT_PUBLIC_MAINTENANCE_SERVICE_URL: "http://maintenance-service.fleet-staging.svc.cluster.local:5001"
+
+resources: {}
