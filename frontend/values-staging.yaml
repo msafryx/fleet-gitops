@@ -2,7 +2,7 @@ namespace: fleet-staging
 
 image:
   repository: muhammedsafry/fleet-frontend
-  tag: "1"
+  tag: "6-b0a896d"
   pullPolicy: IfNotPresent
 
 service:
