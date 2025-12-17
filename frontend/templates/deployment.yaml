@@ -1,29 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fleet-frontend.fullname" . }}
-  labels:
-    app: {{ include "fleet-frontend.name" . }}
+  name: fleet-frontend
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "fleet-frontend.name" . }}
+      app: fleet-frontend
   template:
     metadata:
       labels:
-        app: {{ include "fleet-frontend.name" . }}
+        app: fleet-frontend
     spec:
       containers:
-        - name: {{ include "fleet-frontend.name" . }}
-          image: "{{ required "image.repository is required" .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+        - name: fleet-frontend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 3000
           env:
             - name: NEXT_PUBLIC_VEHICLE_SERVICE_URL
-              value: "{{ .Values.env.NEXT_PUBLIC_VEHICLE_SERVICE_URL | default "" }}"
+              value: "{{ .Values.env.NEXT_PUBLIC_VEHICLE_SERVICE_URL }}"
             - name: NEXT_PUBLIC_DRIVER_SERVICE_URL
-              value: "{{ .Values.env.NEXT_PUBLIC_DRIVER_SERVICE_URL | default "" }}"
+              value: "{{ .Values.env.NEXT_PUBLIC_DRIVER_SERVICE_URL }}"
             - name: NEXT_PUBLIC_MAINTENANCE_SERVICE_URL
-              value: "{{ .Values.env.NEXT_PUBLIC_MAINTENANCE_SERVICE_URL | default "" }}"
+              value: "{{ .Values.env.NEXT_PUBLIC_MAINTENANCE_SERVICE_URL }}"
