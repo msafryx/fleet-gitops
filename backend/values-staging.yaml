@@ -1,5 +1,23 @@
 namespace: fleet-staging
 
+postgres:
+  host: postgres
+  port: 5432
+  # driver DB
+  driverDb: fleet
+  driverUser: postgres
+  driverPass: postgres
+
+  # maintenance DB
+  maintenanceDb: fleet
+  maintenanceUser: postgres
+  maintenancePass: postgres
+
+  # vehicle DB
+  vehicleDb: fleetdb
+  vehicleUser: fleetuser
+  vehiclePass: fleetpass
+
 driver:
   replicaCount: 1
   image:
@@ -12,9 +30,6 @@ driver:
     targetPort: 8080
   env:
     SPRING_PROFILES_ACTIVE: "staging"
-    SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/fleet"
-    SPRING_DATASOURCE_USERNAME: "postgres"
-    SPRING_DATASOURCE_PASSWORD: "postgres"
 
 maintenance:
   replicaCount: 1
@@ -27,6 +42,8 @@ maintenance:
     port: 5001
     targetPort: 5001
   env:
+    # IMPORTANT: set this to a config key that exists in your Flask app.
+    # If you don't have "staging" in config dict, use "development" or "production".
     FLASK_ENV: "development"
     FLASK_APP: "run.py"
     PYTHONUNBUFFERED: "1"
@@ -45,4 +62,3 @@ vehicle:
     ASPNETCORE_ENVIRONMENT: "Staging"
     ASPNETCORE_URLS: "http://+:8080"
     CORS_ORIGINS: "*"
-    ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=fleetdb;Username=fleetuser;Password=fleetpass"
