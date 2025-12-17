@@ -25,6 +25,8 @@ maintenance:
     targetPort: 5001
   env:
     FLASK_ENV: "staging"
+    FLASK_APP: "run.py"
+    PYTHONUNBUFFERED: "1"
 
 vehicle:
   replicaCount: 1
@@ -38,3 +40,6 @@ vehicle:
     targetPort: 8080
   env:
     ASPNETCORE_ENVIRONMENT: "Staging"
+    ASPNETCORE_URLS: "http://+:8080"
+    CORS_ORIGINS: "*"
+    ConnectionStrings__DefaultConnection: ""
