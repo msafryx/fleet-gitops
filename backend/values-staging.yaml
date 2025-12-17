@@ -42,4 +42,4 @@ vehicle:
     ASPNETCORE_ENVIRONMENT: "Staging"
     ASPNETCORE_URLS: "http://+:8080"
     CORS_ORIGINS: "*"
-    ConnectionStrings__DefaultConnection: ""
+    ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=fleetdb;Username=fleetuser;Password=fleetpass"
