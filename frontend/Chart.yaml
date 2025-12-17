@@ -1,5 +1,5 @@
 apiVersion: v2
-name: fleet-frontend
+name: frontend
 description: Fleet Frontend Helm Chart
 type: application
 version: 0.1.0
