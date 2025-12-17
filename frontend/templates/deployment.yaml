@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fleet-frontend
-  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -19,3 +18,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_VEHICLE_SERVICE_URL
+              value: "{{ .Values.env.NEXT_PUBLIC_VEHICLE_SERVICE_URL }}"
+            - name: NEXT_PUBLIC_DRIVER_SERVICE_URL
+              value: "{{ .Values.env.NEXT_PUBLIC_DRIVER_SERVICE_URL }}"
+            - name: NEXT_PUBLIC_MAINTENANCE_SERVICE_URL
+              value: "{{ .Values.env.NEXT_PUBLIC_MAINTENANCE_SERVICE_URL }}"
